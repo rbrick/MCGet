@@ -9,4 +9,6 @@ public interface Packet {
 
     void read(DataInput input);
 
+    int getPacketId();
+
 }

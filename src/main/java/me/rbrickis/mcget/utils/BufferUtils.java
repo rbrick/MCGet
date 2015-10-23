@@ -1,13 +1,13 @@
 package me.rbrickis.mcget.utils;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.DataInput;
+import java.io.DataOutput;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 public final class BufferUtils {
 
-    public static void writeVarInt(DataOutputStream out, int value) throws IOException {
+    public static void writeVarInt(DataOutput out, int value) throws IOException {
         while (true) {
             if ((value & 0xFFFFFF80) == 0) {
                 out.writeByte(value);
@@ -18,7 +18,7 @@ public final class BufferUtils {
         }
     }
 
-    public static int readVarInt(DataInputStream in) throws IOException {
+    public static int readVarInt(DataInput in) throws IOException {
         int i = 0;
         int j = 0;
         while (true) {
@@ -38,7 +38,7 @@ public final class BufferUtils {
      * @param out - Stream to write too
      * @param value  - value to write to the buffer
      */
-    public static void writeString(DataOutputStream out, String value) throws IOException {
+    public static void writeString(DataOutput out, String value) throws IOException {
         byte[] data = value.getBytes(StandardCharsets.UTF_8);
         int data_length = data.length;
         writeVarInt(out, data_length);
@@ -46,7 +46,7 @@ public final class BufferUtils {
     }
 
 
-    public static String readString(DataInputStream in) throws IOException {
+    public static String readString(DataInput in) throws IOException {
         int length = readVarInt(in);
         byte[] data = new byte[length];
 
@@ -54,6 +54,7 @@ public final class BufferUtils {
 
         return new String(data, StandardCharsets.UTF_8);
     }
+
 
 
 }
