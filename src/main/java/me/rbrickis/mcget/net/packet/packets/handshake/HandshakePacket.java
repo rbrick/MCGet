@@ -8,19 +8,25 @@ import java.io.IOException;
 
 public class HandshakePacket extends OutgoingPacket {
 
-    public HandshakePacket() {
+    private String host;
+    private int port;
+
+    public HandshakePacket(String host, int port) {
         super(0x00);
+        this.host = host;
+        this.port = port;
     }
 
     @Override
     public void write(DataOutput output) {
         try {
             BufferUtils.writeVarInt(output, 47);
-            BufferUtils.writeString(output, "localhost");
-            output.writeShort(25565);
+            BufferUtils.writeString(output, host);
+            output.writeShort(port);
             BufferUtils.writeVarInt(output, 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

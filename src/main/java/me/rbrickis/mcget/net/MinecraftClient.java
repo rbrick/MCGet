@@ -23,6 +23,7 @@ public class MinecraftClient {
     @Getter private DataOutputStream outputStream;
     @Getter private PacketHandler handler;
     @Getter private ReaderThread readerThread;
+    @Getter private long lastMessage;
 
     public MinecraftClient(String host, short port, PacketHandler handler) {
         this(new InetSocketAddress(host, port), handler);
@@ -106,6 +107,11 @@ public class MinecraftClient {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    public void setLastMessageTime() {
+        this.lastMessage = System.currentTimeMillis();
     }
 
 
